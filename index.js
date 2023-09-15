@@ -13,6 +13,7 @@ const apiKey = '1BJzitRRvqnzYnkIDeWd5EsKfyfixQSm'
 /* :id Recibiria la keyword desde la app en react */
 app.get('/obtenerDatos/:id', async (req, res) => {
     const id = req.params.id;
+    console.log('Peticion de datos de: ',id)
     try {
         // URL de la API externa que deseas consultar
         const apiURL = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${id}&limit=10&offset=0&rating=g&lang=en`
@@ -23,10 +24,12 @@ app.get('/obtenerDatos/:id', async (req, res) => {
         if (response.status === 200) {
             const data = await response.json(); // Parsea la respuesta JSON
             res.json(data); // Envía los datos obtenidos como respuesta a la solicitud HTTP
+            console.log('Enviando data')
         } else {
             // Si la respuesta no es exitosa, maneja el error adecuadamente
             res.status(response.status).json({ error: 'Error al obtener los datos de la API' });
         }
+
     } catch (error) {
         // Maneja los errores de la solicitud
         console.error('Error al realizar la solicitud:', error);
