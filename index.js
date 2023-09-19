@@ -57,8 +57,8 @@ const cron = require('node-cron');
 
 // Programa un cronjob para enviar un ping al servidor cada cierta cantidad de tiempo
 const cantMin = 8
-cron.schedule(`*/${cantMin} * * * *`, () => {
-    fetch('https://giphy617.onrender.com/obtenerDatos/messi')
+cron.schedule(`*/${cantMin} * * * * *`, () => {
+    fetch('https://giphy617.onrender.com/ping')
         .then(response => {
             if (response.ok) {
                 return response.status;
@@ -76,6 +76,6 @@ cron.schedule(`*/${cantMin} * * * *`, () => {
 
 // Ruta para el endpoint de ping
 app.get('/ping', (req, res) => {
-    console.log(`Ping ${min}`);
-    res.send(`Ping ${min}`);
+    console.log(`Ping ${cantMin}`);
+    res.send(`Pong ${cantMin}`);
   });
