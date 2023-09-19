@@ -13,7 +13,7 @@ const apiKey = '1BJzitRRvqnzYnkIDeWd5EsKfyfixQSm'
 /* :id Recibiria la keyword desde la app en react */
 app.get('/obtenerDatos/:id', async (req, res) => {
     const id = req.params.id;
-    console.log('Peticion de datos de: ',id)
+    console.log('Peticion de datos de: ', id)
     try {
         // URL de la API externa que deseas consultar
         const apiURL = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${id}&limit=10&offset=0&rating=g&lang=en`
@@ -46,5 +46,36 @@ app.get('/access', (req, res) => {
 // Iniciar el servidor
 const port = process.env.PORT || 3000
 app.listen(port, () => {
-  console.log(`Server on port ${port}`) // mensaje en consola luego de levantar el servidor
+    console.log(`Server on port ${port}`) // mensaje en consola luego de levantar el servidor
 })
+
+/* -------------------------------- */
+/* -------------------------------- */
+/* -------------------------------- */
+// Configuración del cronjob para enviar pings cada cierta cantidad de tiempo
+const cron = require('node-cron');
+
+// Programa un cronjob para enviar un ping al servidor cada cierta cantidad de tiempo
+const cantMin = 8
+cron.schedule(`*/${cantMin} * * * *`, () => {
+    fetch('https://giphy617.onrender.com/obtenerDatos/messi')
+        .then(response => {
+            if (response.ok) {
+                return response.status;
+            } else {
+                throw new Error('Respuesta no exitosa');
+            }
+        })
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error('Error al enviar el ping:', error);
+        });
+});
+
+// Ruta para el endpoint de ping
+app.get('/ping', (req, res) => {
+    console.log(`Ping ${min}`);
+    res.send(`Ping ${min}`);
+  });
