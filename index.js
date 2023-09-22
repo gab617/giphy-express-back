@@ -49,33 +49,8 @@ app.listen(port, () => {
     console.log(`Server on port ${port}`) // mensaje en consola luego de levantar el servidor
 })
 
-/* -------------------------------- */
-/* -------------------------------- */
-/* -------------------------------- */
-// Configuración del cronjob para enviar pings cada cierta cantidad de tiempo
-const cron = require('node-cron');
-
-// Programa un cronjob para enviar un ping al servidor cada cierta cantidad de tiempo
-const cantMin = 15
-cron.schedule(`*/${cantMin} * * * *`, () => {
-    fetch('https://giphy617.onrender.com/ping')
-        .then(response => {
-            if (response.ok) {
-                return response.status;
-            } else {
-                throw new Error('Respuesta no exitosa');
-            }
-        })
-        .then(data => {
-            console.log(data);
-        })
-        .catch(error => {
-            console.error('Error al enviar el ping:', error);
-        });
-});
-
 // Ruta para el endpoint de ping
 app.get('/ping', (req, res) => {
-    console.log(`Ping ${cantMin}`);
-    res.send(`Pong ${cantMin}`);
+    console.log(`ping`);
+    res.status(200).send('pong')
   });
