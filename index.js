@@ -5,6 +5,8 @@ const cors = require('cors')
 
 
 app.use(cors({ origin: true }))// por defecto cualquier origen funciona en nuestra api
+app.use(express.json());
+
 
 const apiKey = '1BJzitRRvqnzYnkIDeWd5EsKfyfixQSm'
 
@@ -16,7 +18,7 @@ app.get('/obtenerDatos/:id', async (req, res) => {
     console.log('Peticion de datos de: ', id)
     try {
         // URL de la API externa que deseas consultar
-        const apiURL = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${id}&limit=10&offset=0&rating=g&lang=en`
+        const apiURL = `https://api.giphy.com/v1/gifs/search?api_key=${apiKey}&q=${id}&limit=48&offset=0&rating=g&lang=en`
         // Realiza la solicitud a la API externa usando fetch
         const response = await fetch(apiURL);
 
